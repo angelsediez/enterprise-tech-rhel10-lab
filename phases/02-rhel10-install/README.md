@@ -1,172 +1,132 @@
-# Phase 02 - RHEL 10.1 Guest Deployment
+# 🚀 Phase 02 - RHEL 10.1 Guest Deployment
 
-## Objective
+## 🎯 Objective
+Deploy the first RHEL 10.1 guest virtual machine on the Fedora 43 virtualization host and establish the installation pattern that will later be reused for the remaining lab nodes. 
 
-Deploy the first RHEL 10.1 guest virtual machine on the Fedora 43 virtualization host and establish the installation pattern that will later be reused for the remaining lab nodes.
-
-This phase focuses on guest creation and installation only.
-
----
-
-## Scope
-
-This phase covers:
-
-- preparing the guest installation workflow
-- using the stable RHEL 10.1 ISO path on the host
-- creating the first guest VM (`srv-admin`)
-- using the existing libvirt storage pool and internal lab network
-- completing the base RHEL 10.1 installation
-- validating the guest from both the host and guest side
-- documenting screenshots and inventory data
-
-This phase does **not** cover advanced guest configuration such as:
-- user policy
-- SSH hardening
-- package workflows beyond installation basics
-- SELinux tuning
-- firewalld rules
-- NFS/autofs
-- application deployment
-
-Those belong to later phases.
+This phase focuses on guest creation, installation, first boot validation, and host-side verification.
 
 ---
 
-## Host Context
+## 🔍 Scope
 
-- Host OS: `Fedora Linux 43 (KDE Plasma Desktop Edition)`
-- Hypervisor stack: `KVM + QEMU + libvirt + virt-manager`
-- libvirt connection: `qemu:///system`
-- Storage pool: `enterprise-tech-images`
-- Internal lab network: `lab-int`
-- Guest target platform: `Red Hat Enterprise Linux 10.1`
-- ISO path: `/var/lib/libvirt/boot/rhel-10.1-x86_64-dvd.iso`
+### **Included in this phase:**
+* Preparing the guest installation workflow.
+* Using the stable RHEL 10.1 ISO path on the host.
+* Creating the first guest VM (`srv-admin`).
+* Utilizing the existing libvirt storage pool and internal lab network.
+* Completing the base RHEL 10.1 installation.
+* Validating the guest from both host and guest perspectives.
+* Documenting screenshots and inventory data.
 
----
-
-## Guest Deployment Strategy
-
-This phase uses `srv-admin` as the first guest and installation model.
-
-The idea is:
-
-1. install `srv-admin`
-2. validate that the VM is healthy
-3. document the installation workflow
-4. reuse the same pattern later for:
-   - `srv-web`
-   - `srv-db`
-   - `srv-storage`
+### **Excluded (Later Phases):**
+* Advanced guest configuration (User policy, SSH hardening).
+* Package workflows and application deployment.
+* SELinux tuning and Firewalld rules.
+* NFS/autofs setup.
 
 ---
 
-## Guest Design Decisions
+## 💻 Host Context
+The deployment is performed on the following environment:
 
-### Initial guest selected
-- `srv-admin`
-
-### Firmware model
-- UEFI / OVMF
-
-### Network model
-- libvirt internal network: `lab-int`
-
-### Storage model
-- libvirt storage pool: `enterprise-tech-images`
-
-### Guest installation method
-- `virt-install` on the Fedora 43 host
-- graphical install flow completed through the VM console / viewer
-
-### Installation focus
-- clean base install
-- reproducible VM definition
-- basic readiness validation after first boot
+| Component | Specification |
+| :--- | :--- |
+| **Host OS** | Fedora Linux 43 (KDE Plasma Desktop Edition) |
+| **Hypervisor Stack** | KVM + QEMU + libvirt + virt-manager |
+| **Libvirt Connection** | `qemu:///system` |
+| **Storage Pool** | `enterprise-tech-images` |
+| **Internal Lab Network** | `lab-int` |
+| **Guest Target** | Red Hat Enterprise Linux 10.1 |
+| **ISO Path** | `/var/lib/libvirt/boot/rhel-10.1-x86_64-dvd.iso` |
 
 ---
 
-## Work Completed
+## 🛠️ Guest Deployment Strategy
+This phase uses `srv-admin` as the reference model. The workflow follows this sequence:
 
-- confirmed that the host-side ISO path is stable
-- confirmed that `rhel10.1` is available in `osinfo`
-- prepared the first guest deployment workflow
-- created and installed `srv-admin`
-- attached the guest to the `lab-int` network
-- used the `enterprise-tech-images` storage pool
-- completed the base RHEL 10.1 installation
-- validated guest visibility from the host
-- validated first boot behavior
-
-> Update this section as real work is completed.
+1.  **Install** `srv-admin` using the standard runbook.
+2.  **Validate** that the VM is healthy and reachable.
+3.  **Document** the workflow to ensure reproducibility.
+4.  **Reuse** the validated pattern for `srv-web`, `srv-db`, and `srv-storage`.
 
 ---
 
-## Expected Guest Inventory
+## 📐 Guest Design Decisions
 
-This phase begins the guest inventory for the lab.
+### **Core Configuration**
+* **Initial Guest:** `srv-admin`
+* **Firmware Model:** UEFI / OVMF
+* **Network Model:** `lab-int` (Internal libvirt network)
+* **Storage Model:** `enterprise-tech-images` (Pool-based storage)
 
-Initial target nodes:
+### **Installation Methodology**
+* **Method:** `virt-install` via terminal on Fedora 43.
+* **Flow:** Graphical install flow completed through the VM console.
+* **Focus:** Clean base install with a reproducible VM definition.
+
+---
+
+## ✅ Work Completed
+* Confirmed host-side ISO stability and `rhel10.1` availability in `osinfo`.
+* Validated storage pool (`enterprise-tech-images`) and network (`lab-int`).
+* Created `srv-admin.qcow2` guest disk.
+* Launched and completed the RHEL 10.1 installation for `srv-admin`.
+* Configured hostname and guest identity during installation.
+* Created initial admin user (`jdoe`) and enabled root account.
+* Performed multi-point validation (Internal guest checks & Host-side `virsh` checks).
+* Enabled VM **autostart** for `srv-admin`.
+
+---
+
+## 📑 Guest Inventory Status
 
 | Guest | Planned Role | Status |
-|---|---|---|
-| `srv-admin` | Administration and management node | In progress |
-| `srv-web` | Web service node | Pending |
-| `srv-db` | Database service node | Pending |
-| `srv-storage` | Shared storage and support node | Pending |
-
-Update the status column as the phase progresses.
+| :--- | :--- | :--- |
+| `srv-admin` | Administration and management node | ✅ Installed and Validated |
+| `srv-web` | Web service node | ⚪ Pending |
+| `srv-db` | Database service node | ⚪ Pending |
+| `srv-storage` | Shared storage and support node | ⚪ Pending |
 
 ---
 
-## Validation Goals
-
-At the end of this phase, the following should be true:
-
-- the RHEL 10.1 ISO is reachable from the host
-- `virt-install` can use `rhel10.1`
-- the `srv-admin` guest exists in libvirt
-- the guest boots successfully
-- the guest is attached to `lab-int`
-- the guest disk exists in `enterprise-tech-images`
-- the guest is visible through `virsh`
-- the guest receives network connectivity appropriate for this phase
-- screenshots and guest inventory are documented
+## 🧪 Validation Results
+The following milestones were successfully verified:
+* **ISO/OS Info:** ISO reachable and `rhel10.1` recognized.
+* **VM Presence:** Guest exists in libvirt and boots successfully.
+* **Connectivity:** Attached to `lab-int` with DHCP active.
+* **Identity:** Hostname correctly set to `srv-admin`.
+* **Stability:** Host-side validation confirms active interface and IP.
+* **Persistence:** Autostart enabled and confirmed.
 
 ---
 
-## Screenshots
+## 📸 Screenshots
+Captured evidence is stored in `assets/screenshots/phase-02/`:
 
-Store all screenshots in:
+**Core Evidence:**
+* `P02-01-iso-pool-network-ready.png`
+* `P02-02-srv-admin-volume-created.png`
+* `P02-03-virt-install-srv-admin.png`
+* `P02-04-anaconda-installation-summary-srv-admin.png`
+* `P02-05-anaconda-installation-destination-srv-admin.png`
+* `P02-06-anaconda-network-hostname-srv-admin.png`
+* `P02-08-srv-admin-host-side-validation.png`
 
-`assets/screenshots/phase-02/`
-
-Suggested captures:
-
-- host preflight with ISO + pool + network ready
-- `virt-install` command and launch
-- RHEL boot menu / installer start
-- Anaconda installation summary
-- installation destination
-- network and hostname screen
-- first boot validation inside `srv-admin`
-- host-side validation with `virsh`
-
-> Replace this section later with the real screenshot filenames.
-
----
-
-## Related Files
-
-- `runbooks/rhel10-install.md`
-- `notes/guest-inventory.md`
-- `phases/01-virtualization-host/README.md`
-- `phases/01-virtualization-host/lab-int.xml`
+**Detailed Steps:**
+* `P02-04b-anaconda-software-selection-srv-admin.png`
+* `P02-07a-srv-admin-os-and-hostname-validation.png`
+* `P02-07b-srv-admin-network-target-storage-validation.png`
+* `P02-06b-anaconda-root-account-srv-admin.png`
 
 ---
 
-## Outcome
+## 📂 Related Files
+* `runbooks/rhel10-install.md`
+* `notes/guest-inventory.md`
+* `phases/01-virtualization-host/README.md`
+* `phases/01-virtualization-host/lab-int.xml`
 
-Once this phase is completed successfully, the lab will have its first installed RHEL 10.1 guest (`srv-admin`) and a reusable installation pattern for the remaining nodes.
+---
 
-The next step after this phase is to continue with post-install baseline work in later phases.
+## 🏁 Outcome
+Phase 02 successfully delivered the first working RHEL 10.1 guest. The lab now has a validated installation workflow and a solid deployment pattern for the remaining nodes.
