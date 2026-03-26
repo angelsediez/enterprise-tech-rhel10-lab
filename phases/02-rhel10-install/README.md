@@ -79,6 +79,10 @@ This phase uses `srv-admin` as the reference model. The workflow follows this se
 * Launched and completed the RHEL 10.1 installation for `srv-web`.
 * Validated `srv-web` from both guest-side and host-side.
 * Enabled VM **autostart** for `srv-web`.
+* Repeated the validated deployment pattern for `srv-db`.
+* Launched and completed the RHEL 10.1 installation for `srv-db`.
+* Validated `srv-db` from both guest-side and host-side.
+* Enabled VM **autostart** for `srv-db`.
 
 ---
 
@@ -88,7 +92,7 @@ This phase uses `srv-admin` as the reference model. The workflow follows this se
 | :--- | :--- | :--- |
 | `srv-admin` | Administration and management node | ✅ Installed and Validated |
 | `srv-web` | Web service node | ✅ Installed and Validated |
-| `srv-db` | Database service node | ⚪ Pending |
+| `srv-db` | Database service node | ✅ Installed and Validated |
 | `srv-storage` | Shared storage and support node | ⚪ Pending |
 
 ---
@@ -98,12 +102,15 @@ The following milestones were successfully verified:
 * **ISO/OS Info:** ISO reachable and `rhel10.1` recognized.
 * **VM Presence:** Guest exists in libvirt and boots successfully.
 * **Connectivity:** Attached to `lab-int` with DHCP active.
-* **Identity:** Hostname correctly set to `srv-admin`.
+* **Identity:** Guest hostnames were correctly set during installation and validated after first boot.
 * **Stability:** Host-side validation confirms active interface and IP.
 * **Persistence:** Autostart enabled and confirmed.
 * **Pattern Reuse:** `srv-web` now follows the same validated deployment pattern as `srv-admin`.
 * **Second Guest Validation:** `srv-web` was validated from both guest-side and host-side.
 * **Second Guest Persistence:** Autostart enabled and confirmed for `srv-web`.
+* **Third Guest Reuse:** `srv-db` now follows the same validated deployment pattern used for `srv-admin` and `srv-web`.
+* **Third Guest Validation:** `srv-db` was validated from both guest-side and host-side.
+* **Third Guest Persistence:** Autostart enabled and confirmed for `srv-db`.
 
 ---
 
@@ -136,6 +143,20 @@ Captured evidence is stored in `assets/screenshots/phase-02/`:
 * `P02-12-anaconda-installation-summary-srv-web.png`
 * `P02-13-installation-complete-srv-web.png`
 
+**srv-db Core Evidence:**
+* `P02-17-anaconda-installation-destination-srv-db.png`
+* `P02-18-anaconda-network-hostname-srv-db.png`
+* `P02-19-anaconda-installation-summary-srv-db.png`
+* `P02-20-installation-complete-srv-db.png`
+* `P02-21-srv-db-first-boot-validation.png`
+* `P02-22-srv-db-host-side-validation.png`
+
+**srv-db Additional Detail:**
+* `P02-19b-anaconda-software-selection-srv-db.png`
+* `P02-19c-anaconda-root-account-srv-db.png`
+* `P02-19d-anaconda-user-creation-srv-db.png`
+* `P02-22b-srv-db-autostart-and-dominfo.png`
+
 ---
 
 ## 📂 Related Files
@@ -147,4 +168,4 @@ Captured evidence is stored in `assets/screenshots/phase-02/`:
 ---
 
 ## 🏁 Outcome
-Phase 02 has now produced two working RHEL 10.1 guests (`srv-admin` and `srv-web`). The lab now has a validated installation workflow and a solid deployment pattern for the remaining nodes.
+Phase 02 has now produced three working RHEL 10.1 guests (`srv-admin`, `srv-web`, and `srv-db`). The lab now has a validated installation workflow and a solid deployment pattern for the remaining node.
