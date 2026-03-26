@@ -1,7 +1,7 @@
 # 🚀 Phase 02 - RHEL 10.1 Guest Deployment
 
 ## 🎯 Objective
-Deploy the first RHEL 10.1 guest virtual machine on the Fedora 43 virtualization host and establish the installation pattern that will later be reused for the remaining lab nodes. 
+Deploy the first RHEL 10.1 guest virtual machine on the Fedora 43 virtualization host and establish the installation pattern that will later be reused for the remaining lab nodes.
 
 This phase focuses on guest creation, installation, first boot validation, and host-side verification.
 
@@ -47,7 +47,7 @@ This phase uses `srv-admin` as the reference model. The workflow follows this se
 1.  **Install** `srv-admin` using the standard runbook.
 2.  **Validate** that the VM is healthy and reachable.
 3.  **Document** the workflow to ensure reproducibility.
-4.  **Reuse** the validated pattern for `srv-web`, `srv-db`, and `srv-storage`.
+4.  **Reuse** the validated pattern for `srv-web`, `srv-db`, and `srv-storage` as each guest is deployed.
 
 ---
 
@@ -75,6 +75,10 @@ This phase uses `srv-admin` as the reference model. The workflow follows this se
 * Created initial admin user (`jdoe`) and enabled root account.
 * Performed multi-point validation (Internal guest checks & Host-side `virsh` checks).
 * Enabled VM **autostart** for `srv-admin`.
+* Repeated the validated deployment pattern for `srv-web`.
+* Launched and completed the RHEL 10.1 installation for `srv-web`.
+* Validated `srv-web` from both guest-side and host-side.
+* Enabled VM **autostart** for `srv-web`.
 
 ---
 
@@ -83,7 +87,7 @@ This phase uses `srv-admin` as the reference model. The workflow follows this se
 | Guest | Planned Role | Status |
 | :--- | :--- | :--- |
 | `srv-admin` | Administration and management node | ✅ Installed and Validated |
-| `srv-web` | Web service node | ⚪ Pending |
+| `srv-web` | Web service node | ✅ Installed and Validated |
 | `srv-db` | Database service node | ⚪ Pending |
 | `srv-storage` | Shared storage and support node | ⚪ Pending |
 
@@ -97,13 +101,16 @@ The following milestones were successfully verified:
 * **Identity:** Hostname correctly set to `srv-admin`.
 * **Stability:** Host-side validation confirms active interface and IP.
 * **Persistence:** Autostart enabled and confirmed.
+* **Pattern Reuse:** `srv-web` now follows the same validated deployment pattern as `srv-admin`.
+* **Second Guest Validation:** `srv-web` was validated from both guest-side and host-side.
+* **Second Guest Persistence:** Autostart enabled and confirmed for `srv-web`.
 
 ---
 
 ## 📸 Screenshots
 Captured evidence is stored in `assets/screenshots/phase-02/`:
 
-**Core Evidence:**
+**srv-admin Core Evidence:**
 * `P02-01-iso-pool-network-ready.png`
 * `P02-02-srv-admin-volume-created.png`
 * `P02-03-virt-install-srv-admin.png`
@@ -112,11 +119,22 @@ Captured evidence is stored in `assets/screenshots/phase-02/`:
 * `P02-06-anaconda-network-hostname-srv-admin.png`
 * `P02-08-srv-admin-host-side-validation.png`
 
-**Detailed Steps:**
+**srv-admin Additional Detail:**
 * `P02-04b-anaconda-software-selection-srv-admin.png`
 * `P02-07a-srv-admin-os-and-hostname-validation.png`
 * `P02-07b-srv-admin-network-target-storage-validation.png`
 * `P02-06b-anaconda-root-account-srv-admin.png`
+
+**srv-web Core Evidence:**
+* `P02-09-virt-install-srv-web.png`
+* `P02-11-anaconda-network-hostname-srv-web.png`
+* `P02-14-srv-web-first-boot-validation.png`
+* `P02-15-srv-web-host-side-validation.png`
+
+**srv-web Additional Detail:**
+* `P02-10-anaconda-installation-destination-srv-web.png`
+* `P02-12-anaconda-installation-summary-srv-web.png`
+* `P02-13-installation-complete-srv-web.png`
 
 ---
 
@@ -129,4 +147,4 @@ Captured evidence is stored in `assets/screenshots/phase-02/`:
 ---
 
 ## 🏁 Outcome
-Phase 02 successfully delivered the first working RHEL 10.1 guest. The lab now has a validated installation workflow and a solid deployment pattern for the remaining nodes.
+Phase 02 has now produced two working RHEL 10.1 guests (`srv-admin` and `srv-web`). The lab now has a validated installation workflow and a solid deployment pattern for the remaining nodes.
