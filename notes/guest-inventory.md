@@ -27,7 +27,7 @@ The following environment settings apply to the virtualization host where these 
 | `srv-admin` | Administration and management node | 2 | 4096 | 60G qcow2 | UEFI / OVMF | ✅ Installed | ✅ Validated | ✅ Complete |
 | `srv-web` | Web service node | 2 | 4096 | 60G qcow2 | UEFI / OVMF | ✅ Installed | ✅ Validated | ✅ Complete |
 | `srv-db` | Database service node | 2 | 4096 | 60G qcow2 | UEFI / OVMF | ✅ Installed | ✅ Validated | ✅ Complete |
-| `srv-storage` | Shared storage and NFS/autofs support node | 2 | 4096 | 60G qcow2 | UEFI / OVMF | ⚪ Pending | ⚪ Pending | ⚪ Pending |
+| `srv-storage` | Shared storage and NFS/autofs support node | 2 | 4096 | 60G qcow2 | UEFI / OVMF | ✅ Installed | ✅ Validated | ✅ Complete |
 
 > [!NOTE]
 > All disks are stored in the `enterprise-tech-images` storage pool.
@@ -65,7 +65,7 @@ The following environment settings apply to the virtualization host where these 
 - Visible and validated from the Fedora 43 host using `virsh`.
 - Autostart enabled after successful validation.
 - Screenshot set completed for Phase 02.
-- This guest now serves as the baseline installation pattern for the remaining nodes.
+- This guest served as the baseline installation pattern for the remaining nodes.
 
 ### 🌐 `srv-web`
 - Successfully deployed using the validated `srv-admin` installation pattern.
@@ -74,9 +74,10 @@ The following environment settings apply to the virtualization host where these 
 - Validated from both guest-side and host-side.
 - Autostart enabled after successful validation.
 - Screenshot set completed for the Phase 02 deployment workflow.
+- This guest confirms successful reuse of the baseline deployment pattern after `srv-admin`.
 
 ### 🗄️ `srv-db`
-- Successfully deployed using the validated `srv-admin` and `srv-web` installation pattern.
+- Successfully deployed using the validated installation pattern established by `srv-admin` and reused for `srv-web`.
 - Installed on **RHEL 10.1** with hostname `srv-db`.
 - Connected to the `lab-int` network with DHCP-assigned connectivity.
 - Validated from both guest-side and host-side.
@@ -84,8 +85,13 @@ The following environment settings apply to the virtualization host where these 
 - Screenshot set completed for the Phase 02 deployment workflow.
 
 ### 💾 `srv-storage`
-- Intended for shared storage workflows and later NFS/autofs exercises.
-- May require additional virtual disk planning in future phases.
+- Successfully deployed using the validated installation pattern established by the previous guests.
+- Installed on **RHEL 10.1** with hostname `srv-storage`.
+- Connected to the `lab-int` network with DHCP-assigned connectivity.
+- Validated from both guest-side and host-side.
+- Autostart enabled after successful validation.
+- Screenshot set completed for the Phase 02 deployment workflow.
+- This guest will support shared storage, NFS, and autofs exercises in later phases.
 
 ---
 
@@ -103,9 +109,9 @@ Update this file whenever one of the following events occurs:
 ## 🚩 Current Phase Alignment
 - **Phase 00:** Repository Bootstrap ✅
 - **Phase 01:** Virtualization Host Ready ✅
-- **Phase 02:** First Guest Deployment ✅
+- **Phase 02:** Guest Deployment ✅
 
-**Current validated guests:** `srv-admin`, `srv-web`, `srv-db`  
-**Next planned guest:** `srv-storage`
+**Current validated guests:** `srv-admin`, `srv-web`, `srv-db`, `srv-storage`  
+**Next planned guest:** None
 
-The remaining guest stays in `Pending` state until deployment begins.
+All planned Phase 02 guests are now installed, validated, and documented.
