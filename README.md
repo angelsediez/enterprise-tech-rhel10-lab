@@ -7,7 +7,7 @@
 ![Platform](https://img.shields.io/badge/Platform-RHEL%2010.1-red)
 ![Host](https://img.shields.io/badge/Host-Fedora%2043-blue)
 ![Virtualization](https://img.shields.io/badge/Virtualization-KVM%20%2B%20QEMU%20%2B%20libvirt-6f42c1)
-![Status](https://img.shields.io/badge/Status-In%20Progress-brightgreen)
+![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
 ![Docs](https://img.shields.io/badge/Documentation-Phase--based-orange)
 
 </div>
@@ -18,6 +18,8 @@
 This repository documents a **multi-VM Red Hat Enterprise Linux 10.1 homelab** designed to simulate a compact enterprise environment. It explores real-world Linux systems administration in a structured, repeatable, and well-documented way.
 
 The lab is organized into **execution phases**, supported by professional runbooks, validation checklists, and technical evidence.
+
+Phase 02 established a validated four-node RHEL 10.1 baseline that will support the next infrastructure and service configuration phases.
 
 ---
 
@@ -54,6 +56,8 @@ This homelab focuses on practical, production-ready workflows:
 | **Guest Platform** | Red Hat Enterprise Linux 10.1 (`rhel10.1`) |
 | **Host Platform** | Fedora Linux 43 (KDE Plasma Desktop Edition) |
 | **Virtualization** | KVM + QEMU + libvirt + virt-manager |
+| **Storage Pool** | `enterprise-tech-images` |
+| **Internal Network** | `lab-int` |
 | **Lab Style** | Multi-VM local enterprise simulation |
 | **ISO Path** | `/var/lib/libvirt/boot/rhel-10.1-x86_64-dvd.iso` |
 
@@ -88,7 +92,7 @@ enterprise-tech-rhel10-lab/
 
 - [x] **Phase 00** — Bootstrap and repository setup ✅
 - [x] **Phase 01** — Virtualization host preparation ✅
-- [x] **Phase 02** — First RHEL 10.1 guest deployment ✅
+- [x] **Phase 02** — Four-node RHEL 10.1 guest deployment baseline ✅
 - [ ] **Phase 03** — Shell, files, and local documentation ⚪
 - [ ] **Phase 04** — Identity, SSH, and permissions ⚪
 - [ ] **Phase 05** — Software and scripting ⚪
@@ -105,27 +109,49 @@ enterprise-tech-rhel10-lab/
 
 ### 🖥️ Host Setup (Phase 01)
 **Fedora 43 host identity**
-![Host Identity](https://github.com/angelsediez/enterprise-tech-rhel10-lab/raw/main/assets/screenshots/phase-01/P01-01-fedora43-host-release.png)
+![Host Identity](assets/screenshots/phase-01/P01-01-fedora43-host-release.png)
 
 **KVM capability confirmed**
-![KVM Capability](https://github.com/angelsediez/enterprise-tech-rhel10-lab/raw/main/assets/screenshots/phase-01/P01-02-kvm-capability-and-dev-kvm.png)
+![KVM Capability](assets/screenshots/phase-01/P01-02-kvm-capability-and-dev-kvm.png)
 
 ### 🚀 Guest Deployment (Phase 02)
-**RHEL 10.1 installation workflow**
-![Installation Workflow](https://github.com/angelsediez/enterprise-tech-rhel10-lab/raw/main/assets/screenshots/phase-02/P02-04-anaconda-installation-summary-srv-admin.png)
+**RHEL 10.1 deployment workflow**
+![Deployment Workflow](assets/screenshots/phase-02/P02-26-anaconda-installation-summary-srv-storage.png)
 
-**First guest validated**
-![Guest Validated](https://github.com/angelsediez/enterprise-tech-rhel10-lab/raw/main/assets/screenshots/phase-02/P02-07a-srv-admin-os-and-hostname-validation.png)
+**Final guest validated**
+![Final Guest Validated](assets/screenshots/phase-02/P02-29-srv-storage-host-side-validation.png)
 
 ---
 
 ## ✅ Current Status
 
 > [!IMPORTANT]
-> **Status:** In Progress  
-> **Completed Phases:** 00, 01, 02  
-> **Validated Guest:** `srv-admin`  
+> **Status:** Active Development  
+> **Validated Guests:** `srv-admin`, `srv-web`, `srv-db`, `srv-storage`  
+> **Current Baseline:** Four-node RHEL 10.1 deployment complete  
 > **Next Milestone:** Phase 03 — Shell, files, and local documentation
+
+---
+
+## 🧪 Phase 02 Baseline Summary
+
+Phase 02 produced a validated four-node RHEL 10.1 guest set:
+
+- `srv-admin`
+- `srv-web`
+- `srv-db`
+- `srv-storage`
+
+All guests were deployed on the same baseline model:
+
+- UEFI / OVMF
+- 2 vCPU
+- 4096 MiB RAM
+- 60 GiB qcow2 disk
+- `lab-int` network
+- `enterprise-tech-images` storage pool
+- guest-side and host-side validation completed
+- libvirt autostart enabled after successful validation
 
 ---
 
@@ -140,8 +166,11 @@ This project is built as a hands-on Linux systems lab emphasizing:
 
 ## 🔗 Key Files
 * `runbooks/rhel10-install.md` — Main guest installation guide.
+* `runbooks/kvm-libvirt-host-setup.md` — Phase 01 virtualization host setup and validation.
 * `notes/guest-inventory.md` — Current state of all lab VMs.
-* `phases/02-rhel10-install/README.md` — Detailed Phase 02 report.
+* `phases/02-rhel10-install/README.md` — Detailed Phase 02 deployment report.
+* `phases/01-virtualization-host/README.md` — Host preparation and validation record.
+* `phases/01-virtualization-host/lab-int.xml` — Internal libvirt network definition.
 * `docs/architecture.md` — High-level lab design.
 
 ---
